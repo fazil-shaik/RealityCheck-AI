@@ -38,3 +38,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+check-tables.js
+fix-db-config.js
+migrations
+drizzle
+test-db.js
+test-db-connection.js
