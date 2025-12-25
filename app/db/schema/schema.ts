@@ -1,15 +1,15 @@
 // db/schema.ts
 import { pgTable, text, uuid, timestamp, integer, jsonb } from "drizzle-orm/pg-core";
+import { user } from "./auth-schema";
 
-export const users = pgTable("users", {
-  id: uuid("id").defaultRandom().primaryKey(),
-  email: text("email").notNull().unique(),
-  createdAt: timestamp("created_at").defaultNow(),
-});
+export * from "./auth-schema";
 
+// We are replacing the old 'users' table with the one from 'auth-schema'.
+// The 'ideas' table needs to reference the new 'user' table.
+// note: user.id is text, so we change userId to text to match.
 export const ideas = pgTable("ideas", {
   id: uuid("id").defaultRandom().primaryKey(),
-  userId: uuid("user_id").references(() => users.id),
+  userId: text("user_id").references(() => user.id).notNull(),
   content: text("content").notNull(),
   createdAt: timestamp("created_at").defaultNow(),
 });
