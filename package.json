@@ -9,14 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@neondatabase/serverless": "^1.0.2",
+    "agno": "^1.0.0",
     "better-auth": "^1.4.9",
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.45.1",
     "next": "^15.5.9",
     "pg": "^8.16.3",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "zod": "^4.2.1"
   },
   "devDependencies": {
     "@types/node": "^20",
