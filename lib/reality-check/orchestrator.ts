@@ -15,6 +15,7 @@ export interface FullAnalysisResult {
     timing: AnalysisAgentOutput | null;
     history: AnalysisAgentOutput | null;
     errors: string[];
+    rawResults?: Record<string, any>; // For debugging and persistence
 }
 
 export async function orchestrateAnalysis(idea: string): Promise<FullAnalysisResult> {
@@ -36,7 +37,10 @@ export async function orchestrateAnalysis(idea: string): Promise<FullAnalysisRes
         behavioral: behavioral.data || null,
         timing: timing.data || null,
         history: history.data || null,
-        errors: []
+        errors: [],
+        rawResults: {
+            market, execution, behavioral, timing, history
+        }
     };
 
     // Collect errors
