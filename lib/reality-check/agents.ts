@@ -31,8 +31,8 @@ export const executionComplexityAgent = new AgnoAgent<AnalysisAgentOutput>(
             "Assume the team is smaller and less experienced than needed.",
             "Identify hidden technical debts or 3rd party dependencies (APIs, platforms).",
             "Highlight 'unknown unknowns' in the tech stack.",
-            "Estimate time-to-market conservatively (multiply user estimates by 3x).",
-            "Flag any 'research grade' AI or tech that isn't production ready."
+            "Estimate time-to-market conservatively (multiply user estimates by 1.5x).",
+            "Differentiate between 'standard CRUD complexity' and 'novel R&D risk'."
         ],
         outputSchema: AnalysisAgentSchema,
         schemaDescription: AnalysisSchemaDescription

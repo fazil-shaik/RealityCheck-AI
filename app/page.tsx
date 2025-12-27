@@ -65,6 +65,69 @@ export default async function Home() {
           </div>
         </div>
 
+        {/* How it Works Section */}
+        <div className="container mx-auto max-w-6xl mt-32 relative">
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-3xl md:text-5xl font-bold text-white">How RealityCheck Works</h2>
+            <p className="text-stone-400 text-lg">From idea to brutal truth in three steps.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+            {/* Connecting Line (Desktop) */}
+            <div className="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-stone-800 to-transparent -z-10" />
+
+            {/* Step 1 */}
+            <div className="relative group">
+              <div className="w-24 h-24 mx-auto bg-black border border-stone-800 rounded-2xl flex items-center justify-center mb-6 shadow-2xl group-hover:border-amber-500/50 transition-colors z-20 relative">
+                <div className="absolute inset-0 bg-amber-900/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                <svg className="w-10 h-10 text-amber-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.854 1.566-2.126A6.016 6.016 0 0015 12.001a6.016 6.016 0 00-6 6.002c0 .983.658 1.854 1.566 2.126V18a3 3 0 00-3 3h9a3 3 0 00-3-3z" />
+                </svg>
+                <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-stone-900 border border-stone-700 flex items-center justify-center text-sm font-bold text-stone-300">1</div>
+              </div>
+              <div className="text-center px-4">
+                <h3 className="text-xl font-bold text-white mb-2">Submit Your Idea</h3>
+                <p className="text-stone-400 text-sm leading-relaxed">
+                  Describe your startup concept, target market, and monetization strategy in plain English.
+                </p>
+              </div>
+            </div>
+
+            {/* Step 2 */}
+            <div className="relative group">
+              <div className="w-24 h-24 mx-auto bg-black border border-stone-800 rounded-2xl flex items-center justify-center mb-6 shadow-2xl group-hover:border-blue-500/50 transition-colors z-20 relative">
+                <div className="absolute inset-0 bg-blue-900/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                <svg className="w-10 h-10 text-blue-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25z" />
+                </svg>
+                <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-stone-900 border border-stone-700 flex items-center justify-center text-sm font-bold text-stone-300">2</div>
+              </div>
+              <div className="text-center px-4">
+                <h3 className="text-xl font-bold text-white mb-2">Agent Swarm Analysis</h3>
+                <p className="text-stone-400 text-sm leading-relaxed">
+                  5 specialized AI agents (Market, Tech, Psychology) attack your idea to find hidden risks.
+                </p>
+              </div>
+            </div>
+
+            {/* Step 3 */}
+            <div className="relative group">
+              <div className="w-24 h-24 mx-auto bg-black border border-stone-800 rounded-2xl flex items-center justify-center mb-6 shadow-2xl group-hover:border-green-500/50 transition-colors z-20 relative">
+                <div className="absolute inset-0 bg-green-900/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                <svg className="w-10 h-10 text-green-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zm-7.518-.267A8.25 8.25 0 1120.25 10.5M8.288 14.212A5.25 5.25 0 1117.25 10.5" />
+                </svg>
+                <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-stone-900 border border-stone-700 flex items-center justify-center text-sm font-bold text-stone-300">3</div>
+              </div>
+              <div className="text-center px-4">
+                <h3 className="text-xl font-bold text-white mb-2">Get The Verdict</h3>
+                <p className="text-stone-400 text-sm leading-relaxed">
+                  Receive a deterministic success score (0-100%) and a final <span className="text-green-400 font-bold">PROCEED</span>, <span className="text-yellow-400 font-bold">PIVOT</span>, or <span className="text-red-400 font-bold">KILL</span> decision.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
         {/* Feature Grid */}
         <div className="container mx-auto max-w-6xl mt-32 grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
@@ -72,8 +135,8 @@ export default async function Home() {
               title: "Real-time Verification",
               description: "Cross-reference claims against millions of trusted sources in milliseconds.",
               icon: (
-                <svg className="w-6 h-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                <svg className="w-6 h-6 text-amber-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
                 </svg>
               )
             },
@@ -81,8 +144,8 @@ export default async function Home() {
               title: "AI Analysis",
               description: "Deep learning models understand context, nuance, and potential bias.",
               icon: (
-                <svg className="w-6 h-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                <svg className="w-6 h-6 text-amber-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25z" />
                 </svg>
               )
             },
@@ -90,8 +153,8 @@ export default async function Home() {
               title: "Detailed Reports",
               description: "Get comprehensive breakdowns with citations and confidence scores.",
               icon: (
-                <svg className="w-6 h-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                <svg className="w-6 h-6 text-amber-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                 </svg>
               )
             }
@@ -105,7 +168,7 @@ export default async function Home() {
             </div>
           ))}
         </div>
-      </main>
-    </div>
+      </main >
+    </div >
   );
 }

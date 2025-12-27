@@ -17,9 +17,9 @@ export function calculateSuccessProbability(agentScores: AgentRiskScore[]): {
         totalWeight += agent.weight;
 
         // Penalty for extremely high risk in any single area
-        if (agent.score > 85) {
-            maxRiskPenalty = Math.max(maxRiskPenalty, 15); // Hard penalty
-        } else if (agent.score > 70) {
+        if (agent.score > 90) {
+            maxRiskPenalty = Math.max(maxRiskPenalty, 15); // Hard penalty for catastrophic risk
+        } else if (agent.score > 80) {
             maxRiskPenalty = Math.max(maxRiskPenalty, 10);
         }
     }

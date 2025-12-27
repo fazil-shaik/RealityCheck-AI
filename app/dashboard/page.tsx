@@ -4,14 +4,20 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { analyzeIdeaAction } from "@/app/actions/analyze";
 import { useRouter } from "next/navigation";
+import { HistoryList } from "./components/history-list";
+import { MobileNav } from "./components/mobile-nav";
+import { UserMenu } from "./components/user-menu";
+import { ScannerAnimation } from "./components/scanner-animation";
 
 export default function Dashboard() {
+    // ... (keep state)
     const [idea, setIdea] = useState("");
     const [isScanning, setIsScanning] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
 
     const handleAnalyze = async () => {
+        // ... (keep logic)
         if (!idea.trim() || idea.length < 10) {
             setError("Please enter a detailed idea (min 10 chars).");
             return;
@@ -39,98 +45,87 @@ export default function Dashboard() {
     };
 
     return (
-        <div className="min-h-screen bg-neutral-950 text-neutral-100 flex flex-col items-center justify-center p-4 relative overflow-hidden">
-            {/* Background Elements */}
-            <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
-                <div className="absolute top-[20%] left-[20%] w-96 h-96 bg-purple-900/20 rounded-full blur-[100px]" />
-                <div className="absolute bottom-[20%] right-[20%] w-96 h-96 bg-blue-900/20 rounded-full blur-[100px]" />
+        <div className="min-h-screen bg-black text-white selection:bg-amber-500/30 flex flex-col md:flex-row overflow-hidden">
+            {/* Mobile Nav */}
+            <MobileNav />
+
+            {/* Sidebar (Desktop) */}
+            <div className="w-80 border-r border-white/10 bg-black/50 backdrop-blur-xl p-6 flex-col hidden md:flex z-20 h-screen sticky top-0">
+                <div className="mb-8 pl-2 border-l-2 border-amber-500">
+                    <h1 className="text-xl font-bold bg-gradient-to-r from-amber-200 to-yellow-500 bg-clip-text text-transparent">
+                        RealityCheck
+                    </h1>
+                </div>
+
+                <div className="mb-8">
+                    <UserMenu />
+                </div>
+
+                <div className="flex-1 overflow-y-auto custom-scrollbar">
+                    <HistoryList />
+                </div>
             </div>
 
-            <div className="z-10 w-full max-w-2xl">
-                <AnimatePresence mode="wait">
-                    {!isScanning ? (
-                        <motion.div
-                            key="input"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -20 }}
-                            className="bg-neutral-900/50 backdrop-blur-xl border border-neutral-800 rounded-2xl p-8 shadow-2xl"
-                        >
-                            <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-2">
-                                Reality Check AI
-                            </h1>
-                            <p className="text-neutral-400 mb-6">
-                                Validate your SaaS idea with 5 AI agents before you build.
-                            </p>
+            {/* Main Content */}
+            <div className="flex-1 relative flex flex-col h-screen overflow-y-auto">
+                {/* Background Ambience */}
+                <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
+                    <div className="absolute top-[20%] left-[20%] w-[500px] h-[500px] bg-amber-900/10 rounded-full blur-[120px]" />
+                    <div className="absolute bottom-[20%] right-[20%] w-[500px] h-[500px] bg-orange-900/10 rounded-full blur-[120px]" />
+                </div>
 
-                            <textarea
-                                value={idea}
-                                onChange={(e) => setIdea(e.target.value)}
-                                placeholder="Describe your SaaS idea in detail... (e.g., 'Uber for Dog Walking but with AI-generated routes...')"
-                                className="w-full h-32 bg-neutral-950/50 border border-neutral-800 rounded-xl p-4 text-neutral-200 focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 outline-none transition-all resize-none mb-4"
-                            />
-
-                            {error && (
-                                <p className="text-red-400 text-sm mb-4 bg-red-950/20 border border-red-900/50 p-2 rounded">
-                                    {error}
-                                </p>
-                            )}
-
-                            <button
-                                onClick={handleAnalyze}
-                                disabled={isScanning || !idea.trim()}
-                                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-medium py-3 rounded-xl transition-all shadow-lg hover:shadow-purple-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
-                            >
-                                Run Reality Check
-                            </button>
-                        </motion.div>
-                    ) : (
-                        <motion.div
-                            key="scanning"
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            className="flex flex-col items-center justify-center p-12 text-center"
-                        >
-                            <div className="relative w-24 h-24 mb-8">
+                <div className="flex-1 flex items-center justify-center p-4 md:p-6 relative z-10 min-h-[calc(100vh-64px)] md:min-h-screen">
+                    <div className="w-full max-w-3xl">
+                        <AnimatePresence mode="wait">
+                            {!isScanning ? (
                                 <motion.div
-                                    animate={{ rotate: 360 }}
-                                    transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                                    className="w-full h-full border-4 border-purple-500/30 border-t-purple-500 rounded-full"
-                                />
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                    <span className="text-2xl">🧠</span>
-                                </div>
-                            </div>
+                                    key="input"
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, scale: 0.95 }}
+                                    className="bg-stone-900/50 backdrop-blur-2xl border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl"
+                                >
+                                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Validate Your Reality</h2>
+                                    <p className="text-stone-400 mb-6 text-base md:text-lg">
+                                        Describe your startup idea. Our AI agents will simulate market reception, technical execution, and risk.
+                                    </p>
 
-                            <h2 className="text-2xl font-bold text-white mb-4">
-                                Analyzing your idea...
-                            </h2>
+                                    <textarea
+                                        value={idea}
+                                        onChange={(e) => setIdea(e.target.value)}
+                                        placeholder="E.g., A marketplace for renting high-end camera gear with AI-powered insurance..."
+                                        className="w-full h-40 md:h-48 bg-black/50 border border-white/10 rounded-xl p-4 md:p-6 text-stone-200 focus:ring-1 focus:ring-amber-500/50 focus:border-amber-500/50 outline-none transition-all resize-none mb-6 text-base md:text-lg placeholder:text-stone-600"
+                                    />
 
-                            <div className="space-y-3 w-full max-w-sm">
-                                <AgentStatus name="Market Reality Agent" delay={0} />
-                                <AgentStatus name="Execution Complexity Agent" delay={1.5} />
-                                <AgentStatus name="Human & Behavioral Agent" delay={3} />
-                                <AgentStatus name="Timing Risk Agent" delay={4.5} />
-                                <AgentStatus name="Historical Pattern Agent" delay={6} />
-                            </div>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
+                                    {error && (
+                                        <div className="text-red-400 text-sm mb-4 bg-red-950/20 border border-red-900/50 p-3 rounded-lg flex items-center gap-2">
+                                            <span>⚠️</span> {error}
+                                        </div>
+                                    )}
+
+                                    <button
+                                        onClick={handleAnalyze}
+                                        disabled={!idea.trim()}
+                                        className="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white font-bold py-3 md:py-4 rounded-xl transition-all shadow-lg shadow-amber-900/20 disabled:opacity-50 disabled:cursor-not-allowed text-base md:text-lg"
+                                    >
+                                        Run Simulation
+                                    </button>
+                                </motion.div>
+                            ) : (
+                                <motion.div
+                                    key="scanning"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    className="w-full"
+                                >
+                                    <ScannerAnimation />
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </div>
+                </div>
             </div>
         </div>
-    );
-}
-
-function AgentStatus({ name, delay }: { name: string; delay: number }) {
-    return (
-        <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay }}
-            className="flex items-center gap-3 bg-neutral-900/50 border border-neutral-800 p-3 rounded-lg"
-        >
-            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-sm text-neutral-300">{name} is thinking...</span>
-        </motion.div>
     );
 }
