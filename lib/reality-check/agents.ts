@@ -1,6 +1,6 @@
 
 import { AgnoAgent } from "./agent-factory";
-import { AnalysisAgentSchema, AnalysisAgentOutput } from "./types";
+import { AnalysisAgentSchema, AnalysisAgentOutput, AnalysisSchemaDescription } from "./types";
 
 // 1. Market Reality Agent
 export const marketRealityAgent = new AgnoAgent<AnalysisAgentOutput>(
@@ -15,7 +15,8 @@ export const marketRealityAgent = new AgnoAgent<AnalysisAgentOutput>(
             "Scrutinize the distribution channel: how will users actually find this?",
             "Be pessimistic about viral growth."
         ],
-        outputSchema: AnalysisAgentSchema
+        outputSchema: AnalysisAgentSchema,
+        schemaDescription: AnalysisSchemaDescription
     },
     AnalysisAgentSchema
 );
@@ -33,7 +34,8 @@ export const executionComplexityAgent = new AgnoAgent<AnalysisAgentOutput>(
             "Estimate time-to-market conservatively (multiply user estimates by 3x).",
             "Flag any 'research grade' AI or tech that isn't production ready."
         ],
-        outputSchema: AnalysisAgentSchema
+        outputSchema: AnalysisAgentSchema,
+        schemaDescription: AnalysisSchemaDescription
     },
     AnalysisAgentSchema
 );
@@ -51,7 +53,8 @@ export const humanBehavioralRiskAgent = new AgnoAgent<AnalysisAgentOutput>(
             "Assess the 'cold start' problem: is it useful with 0 users?",
             "Look for 'vitamin vs painkiller' issues."
         ],
-        outputSchema: AnalysisAgentSchema
+        outputSchema: AnalysisAgentSchema,
+        schemaDescription: AnalysisSchemaDescription
     },
     AnalysisAgentSchema
 );
@@ -69,7 +72,8 @@ export const timingExternalRiskAgent = new AgnoAgent<AnalysisAgentOutput>(
             "Are there macro-economic headwinds (recession, funding drying up)?",
             "Check for 'solution in search of a problem' timing."
         ],
-        outputSchema: AnalysisAgentSchema
+        outputSchema: AnalysisAgentSchema,
+        schemaDescription: AnalysisSchemaDescription
     },
     AnalysisAgentSchema
 );
@@ -87,7 +91,8 @@ export const historicalPatternAgent = new AgnoAgent<AnalysisAgentOutput>(
             "Pattern match against classic failure modes (e.g. 'Uber for X', 'Social Network for Y').",
             "Be skeptical of 'this time it's different'."
         ],
-        outputSchema: AnalysisAgentSchema
+        outputSchema: AnalysisAgentSchema,
+        schemaDescription: AnalysisSchemaDescription
     },
     AnalysisAgentSchema
 );

@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import Groq from "groq-sdk";
 import { z } from "zod";
 import { AgentOptions, AgentResult } from "./types";
 
@@ -12,19 +12,12 @@ export class AgnoAgent<T> {
         this.schema = schema;
     }
 
-    private getModel() {
-        const apiKey = process.env.GEMINI_API_KEY;
+    private getClient() {
+        const apiKey = process.env.GROQ_API_KEY;
         if (!apiKey) {
-            throw new Error("GEMINI_API_KEY is not set in environment variables");
+            throw new Error("GROQ_API_KEY is not set in environment variables");
         }
-        const genAI = new GoogleGenerativeAI(apiKey);
-        return genAI.getGenerativeModel({
-            model: "gemini-2.0-flash-exp",
-            generationConfig: {
-                responseMimeType: "application/json",
-                temperature: 0.1,
-            },
-        });
+        return new Groq({ apiKey });
     }
 
     /**
@@ -44,6 +37,7 @@ ${this.options.instructions.map((i) => `- ${i}`).join("\n")}
 
 **Output Format**:
 You must respond with valid JSON matching this schema. Do not output markdown code blocks, just the raw JSON.
+${this.options.schemaDescription ? `Schema Structure:\n${this.options.schemaDescription}` : ""}
       `.trim();
 
             const userPrompt = `Analyze this idea: "${input}"`;
@@ -62,19 +56,20 @@ You must respond with valid JSON matching this schema. Do not output markdown co
     private async generateWithRetry(systemPrompt: string, userPrompt: string, retriesLeft: number): Promise<AgentResult<T>> {
         let rawText = ""; // Declare rawText outside try block to be accessible in catch
         try {
-            const model = this.getModel();
-            const chat = model.startChat({
-                history: [
-                    { role: "user", parts: [{ text: systemPrompt }] },
-                    { role: "model", parts: [{ text: "Understood. I am ready to act as the agent and provide strict JSON output." }] },
+            const groq = this.getClient();
+            const completion = await groq.chat.completions.create({
+                messages: [
+                    { role: "system", content: systemPrompt },
+                    { role: "user", content: userPrompt }
                 ],
+                model: "llama-3.3-70b-versatile",
+                temperature: 0.1,
+                response_format: { type: "json_object" },
             });
 
-            const result = await chat.sendMessage(userPrompt);
-            const response = await result.response;
-            rawText = response.text(); // Assign to the outer rawText
+            rawText = completion.choices[0]?.message?.content || "";
 
-            // Clean up markdown code blocks if present (Gemini sometimes adds ```json ... ```)
+            // Clean up markdown code blocks if present (Groq/Llama sometimes adds ```json ... ```)
             const cleanJson = rawText.replace(/```json/g, "").replace(/```/g, "").trim();
 
             const parsedData = JSON.parse(cleanJson);
@@ -98,6 +93,7 @@ You must respond with valid JSON matching this schema. Do not output markdown co
                 }
 
                 console.warn(`[${this.options.name}] validation failed. Retrying... Error: ${error.message}`);
+                console.warn(`[${this.options.name}] Raw Output: ${rawText}`);
                 // Simple retry: try again.
                 // In a more complex system, we might feed the error back to the model.
                 // For now, we just retry the generation.

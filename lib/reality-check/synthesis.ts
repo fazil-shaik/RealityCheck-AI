@@ -1,6 +1,6 @@
 
 import { AgnoAgent } from "./agent-factory";
-import { SynthesisSchema, SynthesisOutput } from "./types";
+import { SynthesisSchema, SynthesisOutput, SynthesisSchemaDescription } from "./types";
 import { FullAnalysisResult } from "./orchestrator";
 
 const synthesisAgent = new AgnoAgent<SynthesisOutput>(
@@ -16,7 +16,8 @@ const synthesisAgent = new AgnoAgent<SynthesisOutput>(
             "For 'improvement_actions', provide specific pivots or fixes, not generic advice like 'do market research'.",
             "If the verdict is KILL, be brutally honest about why."
         ],
-        outputSchema: SynthesisSchema
+        outputSchema: SynthesisSchema,
+        schemaDescription: SynthesisSchemaDescription
     },
     SynthesisSchema
 );
