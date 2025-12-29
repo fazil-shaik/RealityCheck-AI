@@ -2,20 +2,29 @@ import Link from "next/link";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { ModeToggle } from "@/components/theme-toggle";
+import Image from "next/image";
 
 export default async function Home() {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
 
+
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary/30 transition-colors duration-300">
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 border-b border-border bg-background/80 backdrop-blur-xl">
-        <div className="container mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="text-xl font-bold font-heading bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent">
-            RealityCheck
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="relative w-10 h-10">
+              <Image src="/logo.svg" alt="Reality Check Logo" fill className="object-contain" />
+            </div>
+            <span className="text-xl font-bold font-heading">Reality
+              <span className="text-primary">Check</span></span>
+            <span className="text-xl font-bold font-heading text-primary">AI</span>
+
           </div>
+
           <div className="flex items-center gap-4">
             <ModeToggle />
             {session ? (

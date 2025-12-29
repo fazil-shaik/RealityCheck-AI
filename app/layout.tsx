@@ -16,7 +16,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "RealityCheck AI",
+  title: "RealityCheck-AI",
   description: "Validate ideas with AI precision.",
 };
 

@@ -1,0 +1,36 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="primary" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
+<stop stop-color="#F59E0B"/>
+<stop offset="1" stop-color="#EA580C"/>
+</linearGradient>
+<linearGradient id="glow_grad" x1="100" y1="0" x2="100" y2="200" gradientUnits="userSpaceOnUse">
+<stop stop-color="#F59E0B" stop-opacity="0.2"/>
+<stop offset="1" stop-color="#EA580C" stop-opacity="0"/>
+</linearGradient>
+<filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+<feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+<feMerge>
+<feMergeNode in="coloredBlur"/>
+<feMergeNode in="SourceGraphic"/>
+</feMerge>
+</filter>
+</defs>
+
+<!-- Robot Antennas (Shining) -->
+<path d="M75 40 L65 20" stroke="url(#primary)" stroke-width="3" stroke-linecap="round" />
+<circle cx="65" cy="20" r="4" fill="#FDE68A" filter="url(#glow)" />
+<path d="M125 40 L135 20" stroke="url(#primary)" stroke-width="3" stroke-linecap="round" />
+<circle cx="135" cy="20" r="4" fill="#FDE68A" filter="url(#glow)" />
+
+<!-- Stylized 'R' (Left) - Resized and Shifted Left -->
+<path d="M30 60 V150 H55 C75 150 90 135 90 115 C90 95 75 80 55 80 H50 V60 H30 Z M55 105 H50 V130 H55 C65 130 70 125 70 117.5 C70 110 65 105 55 105 Z" fill="url(#primary)" />
+<path d="M60 115 L85 150 H60 L45 115 H60 Z" fill="url(#primary)" />
+
+<!-- Stylized 'C' (Right) - Resized and Shifted Right -->
+<path d="M170 80 C155 65 135 60 125 60 C100 60 85 80 85 105 C85 130 100 150 125 150 C145 150 160 140 170 125 V100 H150 V115 C145 120 135 130 125 130 C110 130 105 115 105 105 C105 95 110 80 125 80 C135 80 145 85 150 95 V80 H170 V80 Z" fill="url(#primary)" />
+
+<!-- Central Thunderstorm Bolt (Breaking through) - Slightly adjusted to sit between -->
+<path d="M110 50 L125 90 H95 L110 155 L65 90 H90 L85 50 L110 50Z" fill="#F59E0B" stroke="white" stroke-width="2" filter="url(#glow)" />
+
+</svg>

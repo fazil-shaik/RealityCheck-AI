@@ -13,6 +13,7 @@ import { UsageProgress } from "./components/usage-progress";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { ModeToggle } from "@/components/theme-toggle";
+import Image from "next/image";
 
 export default function Dashboard() {
     const [idea, setIdea] = useState("");
@@ -77,13 +78,16 @@ export default function Dashboard() {
                 <div className={`p-6 flex flex-col h-full ${isSidebarCollapsed ? 'px-2' : ''}`}>
                     <div className="mb-8 flex items-center justify-between">
                         {!isSidebarCollapsed && (
-                            <div className="pl-2 border-l-2 border-primary overflow-hidden">
+                            <div className="pl-2 border-l-2 border-primary overflow-hidden flex items-center gap-3">
+                                <div className="relative w-8 h-8 flex-shrink-0">
+                                    <Image src="/logo.svg" alt="Reality Check Logo" fill className="object-contain" />
+                                </div>
                                 <motion.h1
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     className="text-xl font-bold font-heading bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent whitespace-nowrap"
                                 >
-                                    RealityCheck
+                                    RealityCheck-AI
                                 </motion.h1>
                             </div>
                         )}

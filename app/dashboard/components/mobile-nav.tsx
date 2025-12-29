@@ -12,7 +12,7 @@ export function MobileNav() {
     return (
         <div className="md:hidden flex items-center justify-between p-4 bg-black/50 backdrop-blur-xl border-b border-white/10 sticky top-0 z-50">
             <div className="font-bold bg-gradient-to-r from-amber-200 to-yellow-500 bg-clip-text text-transparent">
-                RealityCheck
+                RealityCheck-AI
             </div>
 
             <button
