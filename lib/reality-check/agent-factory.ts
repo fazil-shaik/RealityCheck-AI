@@ -89,13 +89,12 @@ ${this.options.schemaDescription ? `Schema Structure:\n${this.options.schemaDesc
             if (retriesLeft > 0) {
                 // Handle Rate Limits (429) specifically
                 if ((error as Error).message?.includes("429") || String(error).includes("429")) {
-                    console.warn(`[${this.options.name}] Hit rate limit (429). Waiting 10s before retry...`);
+                    // Rate limit hit (429). Waiting 10s before retry...
                     await new Promise(resolve => setTimeout(resolve, 10000));
                     return this.generateWithRetry(systemPrompt, userPrompt, retriesLeft); // Don't decrement retries for rate limit
                 }
 
-                console.warn(`[${this.options.name}] validation failed. Retrying... Error: ${(error as Error).message}`);
-                console.warn(`[${this.options.name}] Raw Output: ${rawText}`);
+                // Validation failed. Retrying...
                 // Simple retry: try again.
                 // In a more complex system, we might feed the error back to the model.
                 // For now, we just retry the generation.

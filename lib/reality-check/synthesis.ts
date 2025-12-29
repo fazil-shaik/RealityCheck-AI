@@ -61,7 +61,7 @@ Hidden Risks: ${JSON.stringify(analysis.history?.hidden_risks)}
     const result = await synthesisAgent.run(inputs);
 
     if (!result.success) {
-        console.error("Synthesis failed:", result.error);
+        // Synthesis failed
         return null;
     }
 

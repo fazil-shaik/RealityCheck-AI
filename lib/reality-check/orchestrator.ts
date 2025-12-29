@@ -19,7 +19,7 @@ export interface FullAnalysisResult {
 }
 
 export async function orchestrateAnalysis(idea: string): Promise<FullAnalysisResult> {
-    console.log(`Starting parallel analysis for idea: "${idea.substring(0, 50)}..."`);
+    // Starting parallel analysis
 
 
     // Run all 5 agents in parallel, but stagger them slightly to avoid instant 429s

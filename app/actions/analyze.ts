@@ -50,7 +50,7 @@ export async function getRateLimitStatus(userId: string) {
 }
 
 export async function analyzeIdeaAction(ideaContent: string) {
-    console.log("Analyze Action Started");
+    // Analyze Action Started
 
     // 1. Validate Auth
     const session = await auth.api.getSession({
@@ -137,7 +137,7 @@ export async function analyzeIdeaAction(ideaContent: string) {
         return { success: true, analysisId: insertedAnalysis.id };
 
     } catch (error) {
-        console.error("Analysis Failed:", error);
+        // Analysis Failed
         return { success: false, error: (error as Error).message || "Something went wrong" };
     }
 }

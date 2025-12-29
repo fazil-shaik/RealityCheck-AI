@@ -16,16 +16,24 @@ type HistoryItem = {
 export function HistoryList() {
     const [history, setHistory] = useState<HistoryItem[]>([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        getHistoryAction().then((data) => {
-            setHistory(data);
-            setLoading(false);
-        });
+        getHistoryAction()
+            .then((data) => {
+                setHistory(data);
+                setLoading(false);
+            })
+            .catch((err) => {
+                // Failed to load history
+                setError("Failed to load history.");
+                setLoading(false);
+            });
     }, []);
 
-    if (loading) return <div className="text-neutral-500 text-sm animate-pulse">Loading history...</div>;
-    if (history.length === 0) return <div className="text-neutral-500 text-sm">No scans yet.</div>;
+    if (loading) return <div className="text-muted-foreground text-sm animate-pulse p-4 text-center">Loading history...</div>;
+    if (error) return <div className="text-destructive text-sm p-4 text-center">{error}</div>;
+    if (history.length === 0) return <div className="text-muted-foreground text-sm p-4 text-center">No scans yet.</div>;
 
     return (
         <div className="space-y-3">
