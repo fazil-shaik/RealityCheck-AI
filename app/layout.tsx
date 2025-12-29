@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit, Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
+import { AOSInit } from "@/components/aos-init";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -30,6 +31,7 @@ export default function RootLayout({
       <body
         className={`${outfit.variable} ${inter.variable} font-sans antialiased`}
       >
+        <AOSInit />
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

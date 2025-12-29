@@ -3,6 +3,7 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { ModeToggle } from "@/components/theme-toggle";
 import Image from "next/image";
+import { Github, Linkedin } from "lucide-react";
 
 export default async function Home() {
   const session = await auth.api.getSession({
@@ -11,7 +12,7 @@ export default async function Home() {
 
 
   return (
-    <div className="min-h-screen bg-background text-foreground selection:bg-primary/30 transition-colors duration-300">
+    <div className="min-h-screen bg-background text-foreground selection:bg-primary/30 transition-colors duration-300 flex flex-col">
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 border-b border-border bg-background/80 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
@@ -52,23 +53,34 @@ export default async function Home() {
       </nav>
 
       {/* Hero Section */}
-      <main className="pt-24 md:pt-32 pb-16 px-6">
+      <main className="pt-24 md:pt-32 pb-16 px-6 flex-1">
         <div className="container mx-auto max-w-5xl text-center space-y-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary border border-border text-xs font-medium text-primary mb-4 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+          <div
+            data-aos="fade-up"
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary border border-border text-xs font-medium text-primary mb-4">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
             V 1.0 Public Beta
           </div>
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-heading tracking-tight text-foreground pb-2 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-100">
+          <h1
+            data-aos="fade-up"
+            data-aos-delay="100"
+            className="text-4xl md:text-6xl lg:text-7xl font-bold font-heading tracking-tight text-foreground pb-2">
             Validate Your Reality<br />
             <span className="text-muted-foreground">With AI Precision</span>
           </h1>
 
-          <p className="max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
+          <p
+            data-aos="fade-up"
+            data-aos-delay="200"
+            className="max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground">
             Instant analysis of ideas, claims, and content. We combine advanced AI with real-time data verification to give you the truth.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
+          <div
+            data-aos="fade-up"
+            data-aos-delay="300"
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8">
             <Link
               href={session ? "/dashboard" : "/sign-in"}
               className="px-8 py-4 bg-gradient-to-r from-primary to-orange-600 rounded-lg text-primary-foreground font-medium hover:from-primary/90 hover:to-orange-500 transition-all shadow-lg shadow-primary/25 w-full sm:w-auto"
@@ -83,17 +95,17 @@ export default async function Home() {
 
         {/* How it Works Section */}
         <div className="container mx-auto max-w-6xl mt-32 relative">
-          <div className="text-center mb-16 space-y-4">
+          <div data-aos="fade-up" className="text-center mb-16 space-y-4">
             <h2 className="text-3xl md:text-4xl font-bold font-heading text-foreground">How RealityCheck Works</h2>
             <p className="text-muted-foreground text-lg">From idea to brutal truth in three steps.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
             {/* Connecting Line (Desktop) */}
-            <div className="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-border to-transparent -z-10" />
+            <div data-aos="fade-in" data-aos-duration="1500" className="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-border to-transparent -z-10" />
 
             {/* Step 1 */}
-            <div className="relative group">
+            <div data-aos="fade-up" data-aos-delay="0" className="relative group">
               <div className="w-24 h-24 mx-auto bg-card border border-border rounded-2xl flex items-center justify-center mb-6 shadow-xl group-hover:border-primary/50 transition-colors z-20 relative">
                 <div className="absolute inset-0 bg-primary/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                 <svg className="w-10 h-10 text-primary" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -110,7 +122,7 @@ export default async function Home() {
             </div>
 
             {/* Step 2 */}
-            <div className="relative group">
+            <div data-aos="fade-up" data-aos-delay="200" className="relative group">
               <div className="w-24 h-24 mx-auto bg-card border border-border rounded-2xl flex items-center justify-center mb-6 shadow-xl group-hover:border-blue-500/50 transition-colors z-20 relative">
                 <div className="absolute inset-0 bg-blue-500/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                 <svg className="w-10 h-10 text-blue-500" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -127,7 +139,7 @@ export default async function Home() {
             </div>
 
             {/* Step 3 */}
-            <div className="relative group">
+            <div data-aos="fade-up" data-aos-delay="400" className="relative group">
               <div className="w-24 h-24 mx-auto bg-card border border-border rounded-2xl flex items-center justify-center mb-6 shadow-xl group-hover:border-emerald-500/50 transition-colors z-20 relative">
                 <div className="absolute inset-0 bg-emerald-500/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                 <svg className="w-10 h-10 text-emerald-500" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -175,7 +187,11 @@ export default async function Home() {
               )
             }
           ].map((feature, i) => (
-            <div key={i} className="p-6 rounded-2xl bg-card border border-border hover:border-primary/50 transition-colors shadow-sm">
+            <div
+              key={i}
+              data-aos="fade-up"
+              data-aos-delay={i * 100}
+              className="p-6 rounded-2xl bg-card border border-border hover:border-primary/50 transition-colors shadow-sm">
               <div className="w-12 h-12 rounded-lg bg-secondary flex items-center justify-center mb-4 border border-border">
                 {feature.icon}
               </div>
@@ -185,6 +201,35 @@ export default async function Home() {
           ))}
         </div>
       </main >
+
+      {/* Footer */}
+      <footer className="border-t border-border bg-background/50 backdrop-blur-xl mt-16">
+        <div className="container mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-sm text-muted-foreground">
+            All rights reserved @realityCheckAI
+          </p>
+          <div className="flex items-center gap-6">
+            <Link
+              href="https://github.com/Fazil-shaik"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Github className="w-5 h-5" />
+              <span className="sr-only">GitHub</span>
+            </Link>
+            <Link
+              href="https://www.linkedin.com/in/shaik-fazil=basha"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-blue-500 transition-colors"
+            >
+              <Linkedin className="w-5 h-5" />
+              <span className="sr-only">LinkedIn</span>
+            </Link>
+          </div>
+        </div>
+      </footer>
     </div >
   );
 }
