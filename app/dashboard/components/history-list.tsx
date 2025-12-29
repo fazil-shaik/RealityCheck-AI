@@ -26,7 +26,7 @@ export function HistoryList() {
             })
             .catch((err) => {
                 // Failed to load history
-                setError("Failed to load history.");
+                setError("Failed to load history." + err.message);
                 setLoading(false);
             });
     }, []);
