@@ -1,15 +1,15 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { TrendingUp, Code2, ShieldAlert, Sparkles } from "lucide-react";
+import { TrendingUp, Code2, ShieldAlert } from "lucide-react";
 import { useState, useEffect } from "react";
+
+const steps = [
+    { text: "Evaluating Market Fit...", icon: TrendingUp, color: "text-blue-400" },
+    { text: "Analyzing Code Complexity...", icon: Code2, color: "text-purple-400" },
+    { text: "Identifying Hidden Risks...", icon: ShieldAlert, color: "text-red-400" },
+];
 
 export function ScannerAnimation() {
     const [step, setStep] = useState(0);
-
-    const steps = [
-        { text: "Evaluating Market Fit...", icon: TrendingUp, color: "text-blue-400" },
-        { text: "Analyzing Code Complexity...", icon: Code2, color: "text-purple-400" },
-        { text: "Identifying Hidden Risks...", icon: ShieldAlert, color: "text-red-400" },
-    ];
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -104,21 +104,4 @@ export function ScannerAnimation() {
     );
 }
 
-function AgentTypingText({ text, delay }: { text: string; delay: number }) {
-    return (
-        <motion.span
-            initial={{ opacity: 0, y: 5 }}
-            animate={{ opacity: [0, 1, 1, 0] }}
-            transition={{
-                duration: 4,
-                times: [0, 0.1, 0.9, 1],
-                delay: delay,
-                repeat: Infinity,
-                repeatDelay: 2
-            }}
-            className="text-sm font-mono text-neutral-400 block h-5"
-        >
-            {text}
-        </motion.span>
-    );
-}
+

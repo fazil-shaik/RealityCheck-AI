@@ -104,8 +104,10 @@ export default async function AnalysisPage({ params }: { params: Promise<{ id: s
     );
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function AgentCard({ output }: { output: any }) {
     // Safely cast findings since it's JSONB
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const findings = output.findings as any;
     const isHighRisk = output.riskScore > 70;
     const isMediumRisk = output.riskScore > 40 && output.riskScore <= 70;

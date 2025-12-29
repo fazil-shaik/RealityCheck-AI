@@ -17,7 +17,7 @@ export default function SignIn() {
         e.preventDefault();
         setError(null);
         if (isSignUp) {
-            const { data, error } = await signUp.email({
+            await signUp.email({
                 email,
                 password,
                 name,
@@ -30,7 +30,7 @@ export default function SignIn() {
                 }
             });
         } else {
-            const { data, error } = await signIn.email({
+            await signIn.email({
                 email,
                 password,
             }, {
@@ -45,11 +45,11 @@ export default function SignIn() {
     };
 
     const handleGoogleSignIn = async () => {
-        const res = await signIn.social({
+        await signIn.social({
             provider: "google",
             callbackURL: "/dashboard",
         }, {
-            onSuccess: async (ctx) => {
+            onSuccess: async () => {
                 // If it returns a URL to redirect to (some adapters do), utilize it.
                 // But typically social signin redirects automatically unless restricted.
             }
@@ -68,7 +68,7 @@ export default function SignIn() {
         await signIn.social({
             provider: "google",
             callbackURL: "/dashboard",
-            // @ts-ignore
+            // @ts-expect-error - Prompt param not typed in current version
             prompt: "consent select_account",
         });
     };

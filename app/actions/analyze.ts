@@ -77,7 +77,7 @@ export async function analyzeIdeaAction(ideaContent: string) {
     // 3. Validate Input
     const validation = analyzeSchema.safeParse({ idea: ideaContent });
     if (!validation.success) {
-        return { success: false, error: validation.error.errors[0].message };
+        return { success: false, error: validation.error.issues[0].message };
     }
     const safeIdea = validation.data.idea;
 
@@ -106,6 +106,7 @@ export async function analyzeIdeaAction(ideaContent: string) {
         const { probability, reasoning } = calculateSuccessProbability(agentScores);
 
         // 6. Persist Analysis
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const [insertedAnalysis] = await db.insert(analyses).values({
             ideaId: insertedIdea.id,
             probability: probability,
@@ -135,8 +136,8 @@ export async function analyzeIdeaAction(ideaContent: string) {
 
         return { success: true, analysisId: insertedAnalysis.id };
 
-    } catch (error: any) {
+    } catch (error) {
         console.error("Analysis Failed:", error);
-        return { success: false, error: error.message || "Something went wrong" };
+        return { success: false, error: (error as Error).message || "Something went wrong" };
     }
 }

@@ -37,8 +37,8 @@ export default function Dashboard() {
             const result = await analyzeIdeaAction(idea);
 
             if (!result.success) {
-                if (result.error === "RATE_LIMIT" && (result as any).resetTime) {
-                    setResetTime(new Date((result as any).resetTime));
+                if (result.error === "RATE_LIMIT" && (result as { resetTime?: Date }).resetTime) {
+                    setResetTime(new Date((result as { resetTime: Date }).resetTime));
                     setIsQueued(true);
                 } else {
                     setError(result.error || "Analysis failed.");
@@ -50,7 +50,7 @@ export default function Dashboard() {
             if (result.analysisId) {
                 router.push(`/analysis/${result.analysisId}`);
             }
-        } catch (e) {
+        } catch {
             setError("An unexpected error occurred.");
             setIsScanning(false);
         }

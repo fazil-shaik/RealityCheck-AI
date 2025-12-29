@@ -15,7 +15,7 @@ export interface FullAnalysisResult {
     timing: AnalysisAgentOutput | null;
     history: AnalysisAgentOutput | null;
     errors: string[];
-    rawResults?: Record<string, any>; // For debugging and persistence
+    rawResults?: Record<string, unknown>; // For debugging and persistence
 }
 
 export async function orchestrateAnalysis(idea: string): Promise<FullAnalysisResult> {

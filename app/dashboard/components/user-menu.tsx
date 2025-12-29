@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
-import { User, LogOut, Settings } from "lucide-react";
+import { LogOut, Settings } from "lucide-react";
 
 export function UserMenu({ isCollapsed }: { isCollapsed?: boolean }) {
     const { data: session } = authClient.useSession();

@@ -55,14 +55,14 @@ export default function Loading() {
 }
 
 
-function LoadingText() {
-    const texts = [
-        "Decrypting Analysis...",
-        "Validating Signatures...",
-        "Retrieving Expert Verdicts...",
-        "Compiling Metrics...",
-    ];
+const texts = [
+    "Decrypting Analysis...",
+    "Validating Signatures...",
+    "Retrieving Expert Verdicts...",
+    "Compiling Metrics...",
+];
 
+function LoadingText() {
     const [index, setIndex] = useState(0);
 
     useEffect(() => {

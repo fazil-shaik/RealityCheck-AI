@@ -9,7 +9,7 @@ export interface AgentOptions {
     description: string;
     instructions: string[];
     // We strictly enforce JSON outputs for all agents
-    outputSchema: z.ZodType<any>;
+    outputSchema: z.ZodType<unknown>;
     schemaDescription?: string;
 }
 

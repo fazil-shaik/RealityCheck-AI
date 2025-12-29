@@ -29,7 +29,7 @@ export const auth = betterAuth({
                     response_type: "code",
                 },
             },
-            // @ts-ignore - Try top-level as well for safety
+            // @ts-expect-error - Try top-level as well for safety
             prompt: "consent select_account",
             access_type: "offline",
         },

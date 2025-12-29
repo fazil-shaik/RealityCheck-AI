@@ -45,10 +45,11 @@ ${this.options.schemaDescription ? `Schema Structure:\n${this.options.schemaDesc
             const result = await this.generateWithRetry(systemPrompt, userPrompt, retries);
             return result;
 
-        } catch (error: any) {
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : "Unknown error during agent execution";
             return {
                 success: false,
-                error: error.message || "Unknown error during agent execution",
+                error: errorMessage,
             };
         }
     }
@@ -83,16 +84,17 @@ ${this.options.schemaDescription ? `Schema Structure:\n${this.options.schemaDesc
                 rawOutput: rawText
             };
 
-        } catch (error: any) {
+        } catch (error) {
+            // const errorMessage = error instanceof Error ? error.message : String(error);
             if (retriesLeft > 0) {
                 // Handle Rate Limits (429) specifically
-                if (error.message?.includes("429") || error.toString().includes("429")) {
+                if ((error as Error).message?.includes("429") || String(error).includes("429")) {
                     console.warn(`[${this.options.name}] Hit rate limit (429). Waiting 10s before retry...`);
                     await new Promise(resolve => setTimeout(resolve, 10000));
                     return this.generateWithRetry(systemPrompt, userPrompt, retriesLeft); // Don't decrement retries for rate limit
                 }
 
-                console.warn(`[${this.options.name}] validation failed. Retrying... Error: ${error.message}`);
+                console.warn(`[${this.options.name}] validation failed. Retrying... Error: ${(error as Error).message}`);
                 console.warn(`[${this.options.name}] Raw Output: ${rawText}`);
                 // Simple retry: try again.
                 // In a more complex system, we might feed the error back to the model.
@@ -102,7 +104,7 @@ ${this.options.schemaDescription ? `Schema Structure:\n${this.options.schemaDesc
 
             return {
                 success: false,
-                error: `Validation failed: ${error.message}`,
+                error: `Validation failed: ${(error as Error).message}`,
                 rawOutput: rawText // Use the rawText captured before parsing/validation failed
             };
         }
