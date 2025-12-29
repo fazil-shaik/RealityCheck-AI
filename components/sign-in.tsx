@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { signIn, signUp } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { ModeToggle } from "@/components/theme-toggle";
 
 export default function SignIn() {
     const [email, setEmail] = useState("");
@@ -44,20 +45,47 @@ export default function SignIn() {
     };
 
     const handleGoogleSignIn = async () => {
+        const res = await signIn.social({
+            provider: "google",
+            callbackURL: "/dashboard",
+        }, {
+            onSuccess: async (ctx) => {
+                // If it returns a URL to redirect to (some adapters do), utilize it.
+                // But typically social signin redirects automatically unless restricted.
+            }
+        });
+
+        // Note: Better Auth's client might not return the URL easily if it auto-redirects.
+        // If the above doesn't work, we rely on the server config in lib/auth.ts which should be correct now.
+        // However, user reports issues.
+
+        // Let's try to trust the server config, which has "prompt: consent select_account".
+        // But if that fails, we might need a different approach.
+        // For now, let's revert to standard call but keep the prompt param just in case updates fixed it,
+        // and rely on the cookie clearing we added to UserMenu.
+
+        // Actually, let's keep the prompt param with the ts-ignore as it might work for some versions.
         await signIn.social({
             provider: "google",
             callbackURL: "/dashboard",
+            // @ts-ignore
+            prompt: "consent select_account",
         });
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white p-4">
-            <div className="w-full max-w-md p-8 space-y-6 bg-stone-900 rounded-xl border border-stone-800 shadow-2xl">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-background text-foreground p-4 py-12 relative transition-colors duration-300">
+            {/* Theme Toggle in Corner */}
+            <div className="absolute top-4 right-4">
+                <ModeToggle />
+            </div>
+
+            <div className="w-full max-w-md p-6 md:p-8 space-y-6 bg-card rounded-xl border border-border shadow-2xl">
                 <div className="text-center">
-                    <h1 className="text-3xl font-bold bg-gradient-to-r from-amber-200 to-yellow-400 bg-clip-text text-transparent">
+                    <h1 className="text-3xl font-bold font-heading bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent">
                         {isSignUp ? "Create Account" : "Welcome Back"}
                     </h1>
-                    <p className="mt-2 text-stone-400">
+                    <p className="mt-2 text-muted-foreground">
                         {isSignUp ? "Sign up to get started" : "Sign in to continue"}
                     </p>
                 </div>
@@ -65,7 +93,7 @@ export default function SignIn() {
                 <div className="space-y-4">
                     <button
                         onClick={handleGoogleSignIn}
-                        className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white text-black rounded-lg font-medium hover:bg-stone-200 transition-colors"
+                        className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-secondary text-secondary-foreground rounded-lg font-medium hover:bg-secondary/80 transition-colors border border-input"
                     >
                         <svg className="w-5 h-5" viewBox="0 0 24 24">
                             <path
@@ -90,76 +118,76 @@ export default function SignIn() {
 
                     <div className="relative">
                         <div className="absolute inset-0 flex items-center">
-                            <div className="w-full border-t border-stone-700"></div>
+                            <div className="w-full border-t border-border"></div>
                         </div>
                         <div className="relative flex justify-center text-sm">
-                            <span className="px-2 bg-stone-900 text-stone-500">Or continue with</span>
+                            <span className="px-2 bg-card text-muted-foreground">Or continue with</span>
                         </div>
                     </div>
 
                     <form onSubmit={handleEmailSignIn} className="space-y-4">
                         {isSignUp && (
                             <div>
-                                <label className="block text-sm font-medium text-stone-300 mb-1">
+                                <label className="block text-sm font-medium text-foreground mb-1">
                                     Name
                                 </label>
                                 <input
                                     type="text"
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
-                                    className="w-full px-4 py-3 bg-stone-800 border border-stone-700 rounded-lg focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 text-white placeholder-stone-500 outline-none transition-all"
+                                    className="w-full px-4 py-3 bg-secondary/50 border border-input rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary text-foreground placeholder-muted-foreground outline-none transition-all"
                                     placeholder="John Doe"
                                     required
                                 />
                             </div>
                         )}
                         <div>
-                            <label className="block text-sm font-medium text-stone-300 mb-1">
+                            <label className="block text-sm font-medium text-foreground mb-1">
                                 Email
                             </label>
                             <input
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="w-full px-4 py-3 bg-stone-800 border border-stone-700 rounded-lg focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 text-white placeholder-stone-500 outline-none transition-all"
+                                className="w-full px-4 py-3 bg-secondary/50 border border-input rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary text-foreground placeholder-muted-foreground outline-none transition-all"
                                 placeholder="name@example.com"
                                 required
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-stone-300 mb-1">
+                            <label className="block text-sm font-medium text-foreground mb-1">
                                 Password
                             </label>
                             <input
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="w-full px-4 py-3 bg-stone-800 border border-stone-700 rounded-lg focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 text-white placeholder-stone-500 outline-none transition-all"
+                                className="w-full px-4 py-3 bg-secondary/50 border border-input rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary text-foreground placeholder-muted-foreground outline-none transition-all"
                                 placeholder="••••••••"
                                 required
                             />
                         </div>
 
                         {error && (
-                            <div className="text-red-400 text-sm bg-red-900/20 p-3 rounded-lg border border-red-900/50">
+                            <div className="text-destructive text-sm bg-destructive/10 p-3 rounded-lg border border-destructive/20">
                                 {error}
                             </div>
                         )}
 
                         <button
                             type="submit"
-                            className="w-full px-4 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-medium rounded-lg hover:from-amber-400 hover:to-orange-500 transition-all shadow-lg shadow-amber-900/20"
+                            className="w-full px-4 py-3 bg-gradient-to-r from-primary to-orange-600 text-primary-foreground font-medium rounded-lg hover:from-primary/90 hover:to-orange-500 transition-all shadow-lg shadow-primary/20"
                         >
                             {isSignUp ? "Create Account" : "Sign In"}
                         </button>
                     </form>
                 </div>
 
-                <div className="text-center text-sm text-stone-500">
+                <div className="text-center text-sm text-muted-foreground">
                     {isSignUp ? "Already have an account? " : "Don't have an account? "}
                     <button
                         onClick={() => setIsSignUp(!isSignUp)}
-                        className="text-amber-400 hover:text-amber-300 font-medium transition-colors"
+                        className="text-primary hover:text-primary/80 font-medium transition-colors"
                     >
                         {isSignUp ? "Sign in" : "Sign up"}
                     </button>

@@ -29,26 +29,26 @@ export function HistoryList() {
 
     return (
         <div className="space-y-3">
-            <h3 className="text-xs font-bold text-neutral-400 uppercase tracking-wider mb-4">Recent Scans</h3>
+            <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-4">Recent Scans</h3>
             <div className="space-y-2">
                 {history.map((item) => (
                     <Link
                         key={item.id}
                         href={`/analysis/${item.id}`}
-                        className="block bg-neutral-900/50 hover:bg-neutral-800 border border-neutral-800 hover:border-neutral-700 rounded-lg p-3 transition-colors group"
+                        className="block bg-card hover:bg-accent/50 border border-border hover:border-primary/30 rounded-lg p-3 transition-colors group"
                     >
                         <div className="flex justify-between items-start mb-1">
-                            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${item.verdict === "KILL" ? "bg-red-950/50 text-red-400 border border-red-900/30" :
-                                    item.verdict === "PIVOT" ? "bg-yellow-950/50 text-yellow-400 border border-yellow-900/30" :
-                                        "bg-green-950/50 text-green-400 border border-green-900/30"
+                            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${item.verdict === "KILL" ? "bg-destructive/10 text-destructive border border-destructive/20" :
+                                item.verdict === "PIVOT" ? "bg-yellow-500/10 text-yellow-500 border border-yellow-500/20" :
+                                    "bg-green-500/10 text-green-500 border border-green-500/20"
                                 }`}>
                                 {item.verdict}
                             </span>
-                            <span className="text-[10px] text-neutral-500">
+                            <span className="text-[10px] text-muted-foreground">
                                 {item.createdAt ? formatDistanceToNow(new Date(item.createdAt), { addSuffix: true }) : ""}
                             </span>
                         </div>
-                        <p className="text-sm text-neutral-300 line-clamp-2 leading-snug group-hover:text-white">
+                        <p className="text-sm text-foreground/80 line-clamp-2 leading-snug group-hover:text-primary transition-colors">
                             {item.idea}
                         </p>
                     </Link>

@@ -9,12 +9,13 @@ const synthesisAgent = new AgnoAgent<SynthesisOutput>(
         role: "Chief Decision Officer / VC Partner",
         description: "Synthesizes multiple expert reports into a final investment decision.",
         instructions: [
-            "Review the findings from the 5 expert agents.",
-            "Weigh risks heavily. If any single risk is 'fatal', the verdict should be KILL.",
-            "Do NOT be optimistic. Start from NO, and only move to PROCEED if the evidence is overwhelming.",
-            "Calculate 'success_probability' conservatively. (Most startups fail, so default is low).",
-            "For 'improvement_actions', provide specific pivots or fixes, not generic advice like 'do market research'.",
-            "If the verdict is KILL, be brutally honest about why."
+            "Review the findings from the 5 expert agents carefully.",
+            "Your goal is to provide a balanced, realistic, but CONSTRUCTIVE verdict.",
+            "Do NOT default to KILL unless the idea is fundamentally flawed (e.g., illegal, physically impossible, or solved perfectly by a monopoly with no room for niche).",
+            "Be generous with 'PIVOT'. If an idea has potential but a bad approach, suggest a Pivot.",
+            "Be open to 'VALIDATE'. If an idea is plausible but risky, encourage testing (Validate) rather than killing it.",
+            "Only use 'PROCEED' for truly exceptional, low-risk, high-reward opportunities.",
+            "Balance pessimism with opportunity. Don't be 'rude', be 'critical friend'."
         ],
         outputSchema: SynthesisSchema,
         schemaDescription: SynthesisSchemaDescription

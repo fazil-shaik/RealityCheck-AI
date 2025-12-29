@@ -2,16 +2,52 @@
 
 import { z } from "zod";
 import { headers } from "next/headers";
-import { auth } from "@/lib/auth"; // Adjust import if needed
-import { db } from "@/app/db/connect"; // Corrected path
+import { auth } from "@/lib/auth";
+import { db } from "@/app/db/connect";
 import { ideas, analyses, agentOutputs } from "@/app/db/schema/schema";
 import { analyzeIdea } from "@/lib/reality-check/index";
 import { calculateSuccessProbability, AgentRiskScore } from "@/lib/reality-check/scoring";
-import { eq } from "drizzle-orm";
+import { eq, and, gt, asc } from "drizzle-orm";
 
 const analyzeSchema = z.object({
     idea: z.string().min(10, "Idea must be at least 10 characters long").max(1000, "Idea too long"),
 });
+
+const RATE_LIMIT_WINDOW_MS = 2 * 60 * 60 * 1000; // 2 hours
+const MAX_REQUESTS = 5;
+
+export async function getRateLimitStatus(userId: string) {
+    const windowStart = new Date(Date.now() - RATE_LIMIT_WINDOW_MS);
+
+    // Count recent ideas for this user
+    const recentIdeas = await db.select({
+        createdAt: ideas.createdAt
+    })
+        .from(ideas)
+        .where(and(
+            eq(ideas.userId, userId),
+            gt(ideas.createdAt, windowStart)
+        ))
+        .orderBy(asc(ideas.createdAt));
+
+    const currentRequests = recentIdeas.length;
+    const limited = currentRequests >= MAX_REQUESTS;
+    let resetTime: Date | null = null;
+
+    if (limited) {
+        // Calculate when the oldest request in the window expires
+        const oldestRequest = recentIdeas[0];
+        resetTime = new Date(oldestRequest.createdAt!.getTime() + RATE_LIMIT_WINDOW_MS);
+    }
+
+    return {
+        limited,
+        resetTime,
+        currentRequests,
+        maxRequests: MAX_REQUESTS,
+        windowMs: RATE_LIMIT_WINDOW_MS
+    };
+}
 
 export async function analyzeIdeaAction(ideaContent: string) {
     console.log("Analyze Action Started");
@@ -27,7 +63,18 @@ export async function analyzeIdeaAction(ideaContent: string) {
 
     const userId = session.user.id;
 
-    // 2. Validate Input
+    // 2. Rate Limiting Check
+    const rateLimitStatus = await getRateLimitStatus(userId);
+
+    if (rateLimitStatus.limited) {
+        return {
+            success: false,
+            error: "RATE_LIMIT",
+            resetTime: rateLimitStatus.resetTime
+        };
+    }
+
+    // 3. Validate Input
     const validation = analyzeSchema.safeParse({ idea: ideaContent });
     if (!validation.success) {
         return { success: false, error: validation.error.errors[0].message };
@@ -63,7 +110,7 @@ export async function analyzeIdeaAction(ideaContent: string) {
             ideaId: insertedIdea.id,
             probability: probability,
             verdict: verdict?.verdict || "PIVOT",
-            summary: reasoning, // Using reasoning as summary for now, or could use verdict.improvement_actions
+            summary: reasoning, // Using reasoning as summary for now
         }).returning();
 
         // 7. Persist Agent Outputs
