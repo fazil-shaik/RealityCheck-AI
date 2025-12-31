@@ -7,6 +7,7 @@ import Image from "next/image";
 import { ModeToggle } from "@/components/theme-toggle";
 import { UserMenu } from "./user-menu";
 import { HistoryList } from "./history-list";
+import Link from "next/link";
 
 export function MobileNav() {
     const [isOpen, setIsOpen] = useState(false);
@@ -15,12 +16,15 @@ export function MobileNav() {
         <>
             <div className="md:hidden flex items-center justify-between p-4 bg-background/80 backdrop-blur-xl border-b border-border sticky top-0 z-40">
                 <div className="flex items-center gap-2">
-                    <div className="relative w-6 h-6">
-                        <Image src="/logo.svg" alt="Reality Check Logo" fill className="object-contain" />
-                    </div>
-                    <div className="font-bold bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent">
-                        RealityCheck-AI
-                    </div>
+                    <Link href={"/"}>
+                        <div className="relative w-6 h-6">
+                            <Image src="/logo.svg" alt="Reality Check Logo" fill className="object-contain" />
+                        </div>
+
+                        <div className="font-bold bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent">
+                            RealityCheck-AI
+                        </div>
+                    </Link>
                 </div>
 
                 <button

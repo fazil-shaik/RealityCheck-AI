@@ -30,3 +30,6 @@ export const agentOutputs = pgTable("agent_outputs", {
   riskScore: integer("risk_score").notNull(),
   findings: jsonb("findings").notNull(),
 });
+
+export type Analysis = typeof analyses.$inferSelect;
+export type AgentOutput = typeof agentOutputs.$inferSelect;

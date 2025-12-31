@@ -17,13 +17,14 @@ export default async function Home() {
       <nav className="fixed top-0 w-full z-50 border-b border-border bg-background/80 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="relative w-10 h-10">
-              <Image src="/logo.svg" alt="Reality Check Logo" fill className="object-contain" />
-            </div>
-            <span className="text-xl font-bold font-heading">Reality
-              <span className="text-primary">Check</span></span>
-            <span className="text-xl font-bold font-heading text-primary">AI</span>
-
+            <Link href={"/"}>
+              <div className="relative w-10 h-10">
+                <Image src="/logo.svg" alt="Reality Check Logo" fill className="object-contain" />
+              </div>
+              <span className="text-xl font-bold font-heading">Reality
+                <span className="text-primary">Check</span></span>
+              <span className="text-xl font-bold font-heading text-primary">AI</span>
+            </Link>
           </div>
 
           <div className="flex items-center gap-4">

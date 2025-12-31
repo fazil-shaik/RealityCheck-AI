@@ -146,10 +146,16 @@ export default function Dashboard() {
 
                                     <textarea
                                         value={idea}
-                                        onChange={(e) => setIdea(e.target.value)}
+                                        onChange={(e) => setIdea(e.target.value.slice(0, 1000))}
                                         placeholder="E.g., A marketplace for renting high-end camera gear with AI-powered insurance..."
-                                        className="w-full h-40 md:h-48 bg-secondary/50 border border-input rounded-xl p-4 md:p-6 text-foreground focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all resize-none mb-6 text-base md:text-lg placeholder:text-muted-foreground"
+                                        maxLength={1000}
+                                        className="w-full h-40 md:h-48 bg-secondary/50 border border-input rounded-xl p-4 md:p-6 text-foreground focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all resize-none mb-2 text-base md:text-lg placeholder:text-muted-foreground"
                                     />
+                                    <div className="flex justify-end mb-6">
+                                        <span className={`text-xs font-mono px-2 py-1 rounded bg-secondary/50 ${idea.length >= 1000 ? 'text-destructive' : 'text-muted-foreground'}`}>
+                                            {idea.length} / 1000
+                                        </span>
+                                    </div>
 
                                     {error && (
                                         <div className="text-destructive text-sm mb-4 bg-destructive/10 border border-destructive/20 p-3 rounded-lg flex items-center gap-2">

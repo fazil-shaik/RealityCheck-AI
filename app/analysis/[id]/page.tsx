@@ -3,6 +3,7 @@ import { db } from "@/app/db/connect";
 import { analyses, agentOutputs, ideas } from "@/app/db/schema/schema";
 import { eq } from "drizzle-orm";
 import Link from "next/link";
+import { DownloadPDFButton } from "@/components/download-pdf-button";
 
 
 // Force dynamic rendering as this depends on DB data
@@ -45,6 +46,13 @@ export default async function AnalysisPage({ params }: { params: Promise<{ id: s
                     <Link href="/dashboard" className="text-neutral-500 hover:text-white transition-colors">
                         ← Back to Dashboard
                     </Link>
+                    <div className="flex justify-end">
+                        <DownloadPDFButton
+                            ideaContent={idea?.content || ""}
+                            analysis={analysis}
+                            agentOutputs={outputs}
+                        />
+                    </div>
 
                     <div className="flex flex-col md:flex-row gap-8 justify-between items-start md:items-center">
                         <div>
