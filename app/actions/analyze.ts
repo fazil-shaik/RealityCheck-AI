@@ -7,45 +7,32 @@ import { db } from "@/app/db/connect";
 import { ideas, analyses, agentOutputs } from "@/app/db/schema/schema";
 import { analyzeIdea } from "@/lib/reality-check/index";
 import { calculateSuccessProbability, AgentRiskScore } from "@/lib/reality-check/scoring";
-import { eq, and, gt, asc } from "drizzle-orm";
+import { eq, asc } from "drizzle-orm";
 
 const analyzeSchema = z.object({
     idea: z.string().min(10, "Idea must be at least 10 characters long").max(1000, "Idea too long"),
 });
 
-const RATE_LIMIT_WINDOW_MS = 2 * 60 * 60 * 1000; // 2 hours
-const MAX_REQUESTS = 5;
+const MAX_REQUESTS = 2;
 
 export async function getRateLimitStatus(userId: string) {
-    const windowStart = new Date(Date.now() - RATE_LIMIT_WINDOW_MS);
-
-    // Count recent ideas for this user
-    const recentIdeas = await db.select({
+    // Count all ideas for this user (Lifetime Limit)
+    const allIdeas = await db.select({
         createdAt: ideas.createdAt
     })
         .from(ideas)
-        .where(and(
-            eq(ideas.userId, userId),
-            gt(ideas.createdAt, windowStart)
-        ))
+        .where(eq(ideas.userId, userId))
         .orderBy(asc(ideas.createdAt));
 
-    const currentRequests = recentIdeas.length;
+    const currentRequests = allIdeas.length;
     const limited = currentRequests >= MAX_REQUESTS;
-    let resetTime: Date | null = null;
-
-    if (limited) {
-        // Calculate when the oldest request in the window expires
-        const oldestRequest = recentIdeas[0];
-        resetTime = new Date(oldestRequest.createdAt!.getTime() + RATE_LIMIT_WINDOW_MS);
-    }
 
     return {
         limited,
-        resetTime,
+        resetTime: null,
         currentRequests,
         maxRequests: MAX_REQUESTS,
-        windowMs: RATE_LIMIT_WINDOW_MS
+        windowMs: 0 // No window for lifetime limit
     };
 }
 

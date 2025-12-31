@@ -37,9 +37,8 @@ export default function Dashboard() {
             const result = await analyzeIdeaAction(idea);
 
             if (!result.success) {
-                if (result.error === "RATE_LIMIT" && (result as { resetTime?: Date }).resetTime) {
-                    setResetTime(new Date((result as { resetTime: Date }).resetTime));
-                    setIsQueued(true);
+                if (result.error === "RATE_LIMIT") {
+                    setError("You have reached the lifetime limit of 2 requests.");
                 } else {
                     setError(result.error || "Analysis failed.");
                 }

@@ -24,7 +24,7 @@ export function UsageProgress() {
         <div className="w-full bg-card rounded-lg p-3 border border-border mb-6 shadow-sm">
             <div className="flex justify-between items-center mb-2">
                 <span className="text-xs text-muted-foreground font-mono uppercase tracking-wider">
-                    Daily Credits
+                    Total Credits
                 </span>
                 <span className={`text-xs font-bold font-mono ${isCrisis ? 'text-primary' : 'text-foreground'}`}>
                     {status.used} / {status.total}
@@ -40,11 +40,7 @@ export function UsageProgress() {
                 />
             </div>
 
-            {status.resetTime && status.used >= status.total && (
-                <p className="text-[10px] text-primary/80 mt-2 text-right">
-                    Resets in {Math.ceil((new Date(status.resetTime).getTime() - Date.now()) / (1000 * 60))}m
-                </p>
-            )}
+
         </div>
     );
 }
